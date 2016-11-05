@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SNS.Benchmark.Runner" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MongoDBName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SNS</Value>
+    </Setting>
+    <Setting Name="MongoConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mongodb://localhost</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
