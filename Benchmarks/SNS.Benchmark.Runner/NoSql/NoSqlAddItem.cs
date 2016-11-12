@@ -15,12 +15,20 @@ namespace SNS.Benchmark.Runner.NoSql
         private static IMongoCollection<Category>  list =MongoContext.Current.DataBase.GetCollection<Category>("Category");
         public override void Execute(object input)
         {
-            //IMongoCollection<Category> list=MongoContext.Current.DataBase.GetCollection<Category>("Category");
-            int itemsToAddCount = (int)input;
             List<Category> itemsToAdd = new List<Category>();
-            for (int i = 0; i < itemsToAddCount; i++)
+
+            if (input is List<Category>)
             {
-                itemsToAdd.Add(DataGenerator.NextCategory());
+                itemsToAdd = (List<Category>)input;
+            }
+            else
+            {
+                int itemsToAddCount = (int)input;
+             
+                for (int i = 0; i < itemsToAddCount; i++)
+                {
+                    itemsToAdd.Add(DataGenerator.NextCategory());
+                }
             }
 
             list.InsertMany(itemsToAdd, new InsertManyOptions() { IsOrdered=true });

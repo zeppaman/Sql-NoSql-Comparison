@@ -10,6 +10,9 @@ namespace SNS.Benchmark.Runner.Entities
     public  static class DataGenerator
     {
         private static Random random = new Random((int)DateTime.Now.Ticks);//thanks to McAden
+
+        public static List<Category> BenchmarkCategories { get; internal set; }
+
         private static string NextString(int size)
         {
             StringBuilder builder = new StringBuilder();
@@ -65,8 +68,16 @@ namespace SNS.Benchmark.Runner.Entities
             d.MasterField2 = NextString(10);
             d.MasterField3 = NextString(10);
 
+            d.CategoryId = GetRandomCategory().CategoryId;
+
             d.FieldToSum = random.Next(100);
             return d;
+        }
+
+        private static Category GetRandomCategory()
+        {
+            int i = random.Next(0, BenchmarkCategories.Count);
+            return DataGenerator.BenchmarkCategories[i];
         }
     }
 }

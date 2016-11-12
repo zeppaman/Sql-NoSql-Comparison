@@ -18,12 +18,13 @@ namespace SNS.Benchmark.Runner.NoSql
         public override void Execute(object input)
         {
             int transactions = (int)input;
-            Guid IdUnableToFind = Guid.NewGuid();
+          
 
             for (int i = 0; i < transactions; i++)
             {              
 
                 Master m = DataGenerator.NextMaster();
+               
                 masterList.InsertOne(m);
                 List<Detail> details = DataGenerator.Details(m.MasterId, 20);
                 foreach (var v in details)

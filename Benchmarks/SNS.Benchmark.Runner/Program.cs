@@ -11,6 +11,8 @@ using
      MongoDB.Driver;
 using MongoDB.Bson;
 using SNS.Benchmark.Runner.Sql;
+using SNS.Benchmark.Runner.Sql.Entities;
+using SNS.Benchmark.Runner.Entities;
 
 namespace SNS.Benchmark.Runner
 {
@@ -51,22 +53,24 @@ namespace SNS.Benchmark.Runner
 
 
             //Transaction bm
-            //BenchmarkSuite bms3 = new BenchmarkSuite();
+            BenchmarkSuite bms3 = new BenchmarkSuite();
 
-            //bms3.AddRunnable(10, "Trans-10", new NoSqlTransaction(), new SqlTransaction());
-            //bms3.AddRunnable(100, "Trans-100", new NoSqlTransaction(), new SqlTransaction());
-            //bms3.AddRunnable(1000, "Trans-1000", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(10, "Trans-10", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(100, "Trans-100", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(1000, "Trans-1000", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(10000, "Trans-10000", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(30000, "Trans-30000", new NoSqlTransaction(), new SqlTransaction());
 
-            //bms3.ExecuteAll();
+            bms3.ExecuteAll();
 
-            //bms3.WriteResultToConsole();
+            bms3.WriteResultToConsole();
 
 
             BenchmarkSuite bms4 = new BenchmarkSuite();
 
             bms4.AddRunnable("kpi", "KPI", new NoSqlAnalytics(), new SqlAnalytics());
             bms4.AddRunnable("kpi", "Report", new NoSqlAnalytics(), new SqlAnalytics());
-            bms4.AddRunnable("export", "Export", new NoSqlAnalytics(), new SqlAnalytics());
+            //bms4.AddRunnable("export", "Export", new NoSqlAnalytics(), new SqlAnalytics());
 
             bms4.ExecuteAll();
 
@@ -88,6 +92,23 @@ namespace SNS.Benchmark.Runner
 
             (new NoSqlAddItem()).Execute(1);
             (new SqlAddItem()).Execute(1);
+
+            //insert reference categories
+            List<Category> itemsToAdd = new List<Category>();
+
+            Guid extToken = Guid.NewGuid();
+            for (int i = 0; i < 10; i++)
+            {
+                Category c = new Category();
+                c.Name = "Cat Sample " + i + " " + extToken.ToString().Substring(0,5);
+                c.CategoryId = Guid.NewGuid();
+                itemsToAdd.Add(c);
+            }
+
+            DataGenerator.BenchmarkCategories = itemsToAdd;
+
+             (new NoSqlAddItem()).Execute(itemsToAdd);
+             (new SqlAddItem()).Execute(itemsToAdd);
 
         }
     }

@@ -30,18 +30,21 @@ namespace SNS.Benchmark.Runner.NoSql
         private void ComputeExport()
         {
             List<object> result = new List<object>();
-            var ids= master.AsQueryable().Select(x => x.CategoryId).Distinct();
+            var ids = master.AsQueryable().Where(x=>x.CategoryId.CompareTo(new Guid())!=0)
+            .Select(x => x.CategoryId).Distinct().ToList();
+
+            var builder = Builders<Category>.Filter;
+            var filter = builder.In<Guid>(x=>x.CategoryId,ids);
             var cats=categories
-                .AsQueryable<Category>()
-                .Where(x=>ids.Contains( x.CategoryId))
+                .Find(filter)
                 .ToList();
 
             foreach (var cat in cats)
             {
-                var maters = master.AsQueryable<Master>().Where(x => x.CategoryId == cat.CategoryId);
+                var maters = master.AsQueryable<Master>().Where(x => x.CategoryId == cat.CategoryId).ToList();
                 foreach (var mas in maters)
                 {
-                    var deta = detail.AsQueryable<Detail>().Where(x => x.MasterId == mas.MasterId);
+                    var deta = detail.AsQueryable<Detail>().Where(x => x.MasterId == mas.MasterId).ToList();
 
 
                     var join = deta.Select(x => new { Detail = x, Master = mas, Category = cat }).ToArray();

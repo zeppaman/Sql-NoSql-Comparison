@@ -7,6 +7,7 @@ using BenchmarkFramework;
 using NHibernate;
 using SNS.Benchmark.Runner.Entities;
 using SNS.Benchmark.Runner.NoSql;
+using SNS.Benchmark.Runner.Sql.Entities;
 
 namespace SNS.Benchmark.Runner.Sql
 {
@@ -14,24 +15,36 @@ namespace SNS.Benchmark.Runner.Sql
     {
         public override void Execute(object input)
         {
-            int addCount = (int)input;
-            
-            IStatelessSession s=NHibernateContext.Current.SessionFactory.OpenStatelessSession();
-            var v = s.BeginTransaction();
-            
-            for (int i = 0; i < addCount; i++)
+            List<Category> itemsToAdd = new List<Category>();
+
+            if (input is List<Category>)
             {
-                s.Insert(DataGenerator.NextCategory());
-                if(i%100000==0)
-                {
-
-                    v.Commit();
-                    v = s.BeginTransaction();
-
-                }
+                itemsToAdd = (List<Category>)input;
             }
-            v.Commit();
-            s.Close();
+            else
+            {
+                int addCount = (int)input;
+                itemsToAdd.Add(DataGenerator.NextCategory());
+            }
+
+            using (IStatelessSession s = NHibernateContext.Current.SessionFactory.OpenStatelessSession())
+            {
+                var v = s.BeginTransaction();
+
+                for (int i = 0; i < itemsToAdd.Count; i++)
+                {
+                    s.Insert(itemsToAdd[i]);
+                    if (i % 100000 == 0)
+                    {
+
+                        v.Commit();
+                        v = s.BeginTransaction();
+
+                    }
+                }
+                v.Commit();
+                s.Close();
+            }
         }
     }
 }
