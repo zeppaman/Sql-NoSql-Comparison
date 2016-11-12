@@ -20,35 +20,57 @@ namespace SNS.Benchmark.Runner
         {
             InitTest();
 
-            //Bulk insert bm
-            BenchmarkSuite bms = new BenchmarkSuite();
-            
-            bms.AddRunnable(10, "BulkInsert-1", new NoSqlAddItem(), new SqlAddItem());
-            bms.AddRunnable(10, "BulkInsert-10", new NoSqlAddItem(), new SqlAddItem());
-            bms.AddRunnable(100, "BulkInsert-100", new NoSqlAddItem(), new SqlAddItem());
-            bms.AddRunnable(1000, "BulkInsert-1000", new NoSqlAddItem(), new SqlAddItem());
-            bms.AddRunnable(10000, "BulkInsert-10000", new NoSqlAddItem(), new SqlAddItem());
-            bms.AddRunnable(100000, "BulkInsert-100000", new NoSqlAddItem(), new SqlAddItem());
-            bms.AddRunnable(1000000, "BulkInsert-1000000", new NoSqlAddItem(), new SqlAddItem());
+            ////Bulk insert bm
+            //BenchmarkSuite bms = new BenchmarkSuite();
 
-            bms.ExecuteAll();
+            //bms.AddRunnable(10, "BulkInsert-1", new NoSqlAddItem(), new SqlAddItem());
+            //bms.AddRunnable(10, "BulkInsert-10", new NoSqlAddItem(), new SqlAddItem());
+            //bms.AddRunnable(100, "BulkInsert-100", new NoSqlAddItem(), new SqlAddItem());
+            //bms.AddRunnable(1000, "BulkInsert-1000", new NoSqlAddItem(), new SqlAddItem());
+            //bms.AddRunnable(10000, "BulkInsert-10000", new NoSqlAddItem(), new SqlAddItem());
+            //bms.AddRunnable(100000, "BulkInsert-100000", new NoSqlAddItem(), new SqlAddItem());
+            //bms.AddRunnable(1000000, "BulkInsert-1000000", new NoSqlAddItem(), new SqlAddItem());
 
-            bms.WriteResultToConsole();
+            //bms.ExecuteAll();
 
-
+            //bms.WriteResultToConsole();
 
 
-            //Search bm
-            BenchmarkSuite bms2 = new BenchmarkSuite();
 
-            bms2.AddRunnable(new int[] {2,30,10 }, "Search-2-30-10", new NoSqlQueryItem(), new SqlQueryItem());
-            bms2.AddRunnable(new int[] {2, 10, 10 }, "Search-2-10-10", new NoSqlQueryItem(), new SqlQueryItem());
-            bms2.AddRunnable(new int[] { 2, 1, 10 }, "Search-2-1-10", new NoSqlQueryItem(), new SqlQueryItem());
 
-            bms2.ExecuteAll();
+            ////Search bm
+            //BenchmarkSuite bms2 = new BenchmarkSuite();
 
-            bms2.WriteResultToConsole();
+            //bms2.AddRunnable(new int[] {2,30,10 }, "Search-2-30-10", new NoSqlQueryItem(), new SqlQueryItem());
+            //bms2.AddRunnable(new int[] {2, 10, 10 }, "Search-2-10-10", new NoSqlQueryItem(), new SqlQueryItem());
+            //bms2.AddRunnable(new int[] { 2, 1, 10 }, "Search-2-1-10", new NoSqlQueryItem(), new SqlQueryItem());
 
+            //bms2.ExecuteAll();
+
+            //bms2.WriteResultToConsole();
+
+
+            //Transaction bm
+            //BenchmarkSuite bms3 = new BenchmarkSuite();
+
+            //bms3.AddRunnable(10, "Trans-10", new NoSqlTransaction(), new SqlTransaction());
+            //bms3.AddRunnable(100, "Trans-100", new NoSqlTransaction(), new SqlTransaction());
+            //bms3.AddRunnable(1000, "Trans-1000", new NoSqlTransaction(), new SqlTransaction());
+
+            //bms3.ExecuteAll();
+
+            //bms3.WriteResultToConsole();
+
+
+            BenchmarkSuite bms4 = new BenchmarkSuite();
+
+            bms4.AddRunnable("kpi", "KPI", new NoSqlAnalytics(), new SqlAnalytics());
+            bms4.AddRunnable("kpi", "Report", new NoSqlAnalytics(), new SqlAnalytics());
+            bms4.AddRunnable("export", "Export", new NoSqlAnalytics(), new SqlAnalytics());
+
+            bms4.ExecuteAll();
+
+            bms4.WriteResultToConsole();
 
 
             Console.ReadLine();

@@ -70,6 +70,8 @@
     <Compile Include="Entities\DataGenerator.cs" />
     <Compile Include="Entities\Mappings.cs" />
     <Compile Include="NoSql\MongoContext.cs" />
+    <Compile Include="NoSql\NoSqlAnalytics.cs" />
+    <Compile Include="NoSql\NoSqlTransaction.cs" />
     <Compile Include="NoSql\NoSqlQueryItem.cs" />
     <Compile Include="NoSql\NoSqlAddItem.cs" />
     <Compile Include="Program.cs" />
@@ -81,6 +83,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Sql\NHibernateContext.cs" />
+    <Compile Include="Sql\SqlAnalytics.cs" />
+    <Compile Include="Sql\SqlTransaction.cs" />
     <Compile Include="Sql\SqlQueryItem.cs" />
     <Compile Include="Sql\SqlAddItem.cs" />
   </ItemGroup>

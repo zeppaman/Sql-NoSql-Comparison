@@ -30,12 +30,13 @@ namespace SNS.Benchmark.Runner.Entities
             Table("Master");
             Schema("dbo");
 
-            Id(x => x.MasterId, map => { map.Generator(Generators.Guid); });
+            Id(x => x.MasterId);
             Property(x => x.CategoryId);
             Property(x => x.MasterField0);
             Property(x => x.MasterField1);
             Property(x => x.MasterField2);
             Property(x => x.MasterField3);
+            Property(x => x.FieldToSum);
 
         }
 
@@ -49,7 +50,7 @@ namespace SNS.Benchmark.Runner.Entities
             Table("Detail");
             Schema("dbo");
 
-            Id(x => x.DetailId, map => { map.Generator(Generators.Guid); });
+            Id(x => x.DetailId);
             Property(x => x.MasterId);
             Property(x => x.DetailField0);
             Property(x => x.DetailField1);

@@ -32,6 +32,8 @@ namespace SNS.Benchmark.Runner.NoSql
             for (int i = 0; i < queryRatio[2]; i++)
             {
                 var page = list.AsQueryable<Category>().Where(x => !x.Name.Contains("TEXT UNFINDABLE")).Skip(100).Take(100).OrderBy(x => x.Name).OrderByDescending(x => x.CategoryId);
+                
+
             }
         }
     }
