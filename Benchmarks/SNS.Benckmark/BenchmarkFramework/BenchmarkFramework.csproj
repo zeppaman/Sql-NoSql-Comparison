@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Benchmark.cs" />
+    <Compile Include="BenchMarkContext.cs" />
     <Compile Include="benchmarkExecution.cs" />
     <Compile Include="BenchmarkRunnable.cs" />
     <Compile Include="BenchmarkSuite.cs" />

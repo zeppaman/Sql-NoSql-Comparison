@@ -24,7 +24,10 @@ namespace SNS.Benchmark.Runner.Sql
             else
             {
                 int addCount = (int)input;
-                itemsToAdd.Add(DataGenerator.NextCategory());
+                for (int i = 0; i < addCount; i++)
+                {
+                    itemsToAdd.Add(DataGenerator.NextCategory());
+                }
             }
 
             using (IStatelessSession s = NHibernateContext.Current.SessionFactory.OpenStatelessSession())

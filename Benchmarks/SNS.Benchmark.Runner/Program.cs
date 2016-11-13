@@ -22,55 +22,45 @@ namespace SNS.Benchmark.Runner
         {
             InitTest();
 
-            ////Bulk insert bm
-            //BenchmarkSuite bms = new BenchmarkSuite();
+            int searchRepeatCount = 2;
+            int reportRepeatCount = 2;
 
-            //bms.AddRunnable(10, "BulkInsert-1", new NoSqlAddItem(), new SqlAddItem());
-            //bms.AddRunnable(10, "BulkInsert-10", new NoSqlAddItem(), new SqlAddItem());
-            //bms.AddRunnable(100, "BulkInsert-100", new NoSqlAddItem(), new SqlAddItem());
-            //bms.AddRunnable(1000, "BulkInsert-1000", new NoSqlAddItem(), new SqlAddItem());
-            //bms.AddRunnable(10000, "BulkInsert-10000", new NoSqlAddItem(), new SqlAddItem());
-            //bms.AddRunnable(100000, "BulkInsert-100000", new NoSqlAddItem(), new SqlAddItem());
-            //bms.AddRunnable(1000000, "BulkInsert-1000000", new NoSqlAddItem(), new SqlAddItem());
 
-            //bms.ExecuteAll();
-
-            //bms.WriteResultToConsole();
+            for (int i = 0; i < searchRepeatCount; i++)
+            {
+                //Add 1.1111.111 rows
+                RunInsertBulk();
+                Console.WriteLine("Test table Size: {0} M", (i+1)*2); // each test are executed twice
+                //Perform search over data base
+                RunSearch();
+            }
 
 
 
+            // 51 110  master rows, 20 deatails per master rows=> 1M
+            for (int i = 0; i < reportRepeatCount; i++)
+            {
+                RunAddDataInTransaction();
+                Console.WriteLine("Test table Size: {0} M", (i + 1) * 2); // each test are executed twice
 
-            ////Search bm
-            //BenchmarkSuite bms2 = new BenchmarkSuite();
+                RunReports(i==0);
+            }
 
-            //bms2.AddRunnable(new int[] {2,30,10 }, "Search-2-30-10", new NoSqlQueryItem(), new SqlQueryItem());
-            //bms2.AddRunnable(new int[] {2, 10, 10 }, "Search-2-10-10", new NoSqlQueryItem(), new SqlQueryItem());
-            //bms2.AddRunnable(new int[] { 2, 1, 10 }, "Search-2-1-10", new NoSqlQueryItem(), new SqlQueryItem());
+        }
 
-            //bms2.ExecuteAll();
-
-            //bms2.WriteResultToConsole();
-
-
-            //Transaction bm
-            BenchmarkSuite bms3 = new BenchmarkSuite();
-
-            bms3.AddRunnable(10, "Trans-10", new NoSqlTransaction(), new SqlTransaction());
-            bms3.AddRunnable(100, "Trans-100", new NoSqlTransaction(), new SqlTransaction());
-            bms3.AddRunnable(1000, "Trans-1000", new NoSqlTransaction(), new SqlTransaction());
-            bms3.AddRunnable(10000, "Trans-10000", new NoSqlTransaction(), new SqlTransaction());
-            bms3.AddRunnable(30000, "Trans-30000", new NoSqlTransaction(), new SqlTransaction());
-
-            bms3.ExecuteAll();
-
-            bms3.WriteResultToConsole();
-
-
+        /// <summary>
+        /// Run report test
+        /// </summary>
+        private static void RunReports(bool testExport)
+        {
             BenchmarkSuite bms4 = new BenchmarkSuite();
 
             bms4.AddRunnable("kpi", "KPI", new NoSqlAnalytics(), new SqlAnalytics());
             bms4.AddRunnable("kpi", "Report", new NoSqlAnalytics(), new SqlAnalytics());
-            //bms4.AddRunnable("export", "Export", new NoSqlAnalytics(), new SqlAnalytics());
+            if (testExport)
+            {
+                bms4.AddRunnable("export", "Export", new NoSqlAnalytics(), new SqlAnalytics());
+            }
 
             bms4.ExecuteAll();
 
@@ -78,8 +68,66 @@ namespace SNS.Benchmark.Runner
 
 
             Console.ReadLine();
+        }
 
 
+
+        /// <summary>
+        /// add data in transaction
+        /// </summary>
+        private static void RunAddDataInTransaction()
+        {
+            //Transaction bm
+            BenchmarkSuite bms3 = new BenchmarkSuite();
+
+            bms3.AddRunnable(10, "Trans-10", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(100, "Trans-100", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(1000, "Trans-1000", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(10000, "Trans-10000", new NoSqlTransaction(), new SqlTransaction());
+            bms3.AddRunnable(40000, "Trans-30000", new NoSqlTransaction(), new SqlTransaction());
+
+            bms3.ExecuteAll();
+
+            bms3.WriteResultToConsole();
+        }
+
+
+        /// <summary>
+        /// Perform many search
+        /// </summary>
+        private static void RunSearch()
+        {
+            //Search bm
+            BenchmarkSuite bms2 = new BenchmarkSuite();
+
+            bms2.AddRunnable(new int[] { 2, 30, 10 }, "Search-2-30-10", new NoSqlQueryItem(), new SqlQueryItem());
+            bms2.AddRunnable(new int[] { 2, 10, 10 }, "Search-2-10-10", new NoSqlQueryItem(), new SqlQueryItem());
+            bms2.AddRunnable(new int[] { 2, 1, 10 }, "Search-2-1-10", new NoSqlQueryItem(), new SqlQueryItem());
+
+            bms2.ExecuteAll();
+
+            bms2.WriteResultToConsole();
+        }
+
+        /// <summary>
+        /// Insert many rows in batch statement to db
+        /// </summary>
+        private static void RunInsertBulk()
+        {
+            //Bulk insert bm
+            BenchmarkSuite bms = new BenchmarkSuite();
+
+            bms.AddRunnable(10, "BulkInsert-1", new NoSqlAddItem(), new SqlAddItem());
+            bms.AddRunnable(10, "BulkInsert-10", new NoSqlAddItem(), new SqlAddItem());
+            bms.AddRunnable(100, "BulkInsert-100", new NoSqlAddItem(), new SqlAddItem());
+            bms.AddRunnable(1000, "BulkInsert-1000", new NoSqlAddItem(), new SqlAddItem());
+            bms.AddRunnable(10000, "BulkInsert-10000", new NoSqlAddItem(), new SqlAddItem());
+            bms.AddRunnable(100000, "BulkInsert-100000", new NoSqlAddItem(), new SqlAddItem());
+            bms.AddRunnable(1000000, "BulkInsert-1000000", new NoSqlAddItem(), new SqlAddItem());
+
+            bms.ExecuteAll();
+
+            bms.WriteResultToConsole();
         }
 
         private static void InitTest()

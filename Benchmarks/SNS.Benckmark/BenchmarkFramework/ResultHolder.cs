@@ -11,8 +11,7 @@ namespace BenchmarkFramework
         public  class Result
         {
             public string Testname { get; set; }
-            public long NoSqlExecution { get; set; }
-            public long SqlExecution { get; set; }
+            public long[] Execution { get; set; }
         }
 
         public List<Result> Results { get; set; }

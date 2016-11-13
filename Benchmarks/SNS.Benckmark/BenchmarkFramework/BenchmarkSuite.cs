@@ -16,11 +16,10 @@ namespace BenchmarkFramework
         {
         }
 
-        public BenchmarkSuite AddRunnable(object input, string testname, BenchmarkExecution noSqlImplementation, BenchmarkExecution sqlImplementation)
+        public BenchmarkSuite AddRunnable(object input, string testname,  params BenchmarkExecution[] implementations)
         {
             Benchmark b = new Benchmark(this.ResultHolder, testname);
-            b.NoSqlImplementation = noSqlImplementation;
-            b.SqlImplementation = sqlImplementation;
+            b.Implementations = implementations;
 
             return AddRunnable(b, input);
 
@@ -57,12 +56,29 @@ namespace BenchmarkFramework
         {
             Console.WriteLine("====================================");
             Console.WriteLine("************************************");
-            Console.WriteLine("Testname;NoSQL;SQL;");
+
+            string title = "Testname;";
+            for (int i = 0; i < this.Benchmarks.Count; i++)
+            {
+                for (int k = 0; k < Benchmarks[i].BenchmarkToRun.Implementations.Length; k++)
+                {
+                    title += Benchmarks[i].BenchmarkToRun.Implementations[k].GetType().Name + ";";
+                }
+                break;
+            }
+            Console.WriteLine(title);
             Console.WriteLine("************************************");
             foreach (var res in this.ResultHolder.Results)
             {
+                
+                string line = res.Testname+";";
 
-                Console.WriteLine("{0},{1},{2}", res.Testname, res.NoSqlExecution, res.SqlExecution);
+                for (int i = 0; i < res.Execution.Length; i++)
+                {
+                    line += res.Execution[i] + ";";
+                }
+
+                Console.WriteLine(line);
 
             }
 

@@ -8,8 +8,7 @@ namespace BenchmarkFramework
 {
     public  class Benchmark
     {
-        public BenchmarkExecution SqlImplementation { get; set; }
-        public BenchmarkExecution NoSqlImplementation { get; set; }
+        public BenchmarkExecution[] Implementations { get; set; }
         public int Retry { get; set; }
 
        
@@ -26,27 +25,46 @@ namespace BenchmarkFramework
 
         public void Compare(object input)
         {
-            long sqlTime = 0;
-            long noSqlTime = 0;
 
-            for (int i = 1; i <= this.Retry; i++)
+            if (BenchMarkContext.Current.EnableFileLog)
             {
-                //execution order is swithcet do prevent test influences
-                if (i % 2 == 0)
+                string[] names = new string[Implementations.Length];
+                for (int i = 0; i < Implementations.Length; i++)
                 {
-                    sqlTime+= SqlImplementation.RunExecution(input);
-                    noSqlTime += NoSqlImplementation.RunExecution(input);
+                    names[i] = Implementations[i].GetType().Name;
                 }
-                else
-                {                    
-                    noSqlTime += NoSqlImplementation.RunExecution(input);
-                    sqlTime += SqlImplementation.RunExecution(input);
-                }
+                BenchMarkContext.Current.LogInfo(
+                    this.TestDescription,names );
+            }
+
+            long[] times = new long[Implementations.Length];
+            for (int i = 0; i < times.Length; i++)
+            {
+                times[i] = 0;
+            }
+
+            for (int i = 0; i < this.Retry; i++)
+            {
+
+                times [i]+= Implementations[i].RunExecution(input);
+                
+            }
+
+            long[] avgTimes = new long[Implementations.Length];
+            for (int i = 0; i < avgTimes.Length; i++)
+            {
+                avgTimes[i] = times[i]/(this.Retry);
+            }
+
+            if (BenchMarkContext.Current.EnableFileLog)
+            {
+
+                BenchMarkContext.Current.LogInfo(
+                    this.TestDescription, avgTimes);
             }
 
             ResultHolder.Results.Add(new ResultHolder.Result() {
-                NoSqlExecution=noSqlTime/this.Retry,
-                SqlExecution = sqlTime / this.Retry,
+                Execution= avgTimes,
                 Testname=this.TestDescription
             });
         }
