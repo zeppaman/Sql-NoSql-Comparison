@@ -1,5 +1,8 @@
 # Sql-NoSql-Comparison
+[![Build status](https://ci.appveyor.com/api/projects/status/w0gymegsqohd45mb?svg=true)](https://ci.appveyor.com/project/zeppaman/sql-nosql-comparison)
+
 This repository host project for the event https://www.meetup.com/TechItaliaTuscany/events/234912357/. 
+
 
 During this speach I will present some peculiarities of NoSQL backends comparing them to the tranditional RDBMS.
 
