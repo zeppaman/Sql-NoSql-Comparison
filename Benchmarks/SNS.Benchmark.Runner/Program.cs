@@ -45,7 +45,7 @@ namespace SNS.Benchmark.Runner
 
                 RunReports(i<3);
             }
-
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace SNS.Benchmark.Runner
             bms4.WriteResultToConsole();
 
 
-            Console.ReadLine();
+           
         }
 
 
@@ -117,7 +117,7 @@ namespace SNS.Benchmark.Runner
             //Bulk insert bm
             BenchmarkSuite bms = new BenchmarkSuite();
 
-            bms.AddRunnable(10, "BulkInsert-1", new NoSqlAddItem(), new SqlAddItem());
+            bms.AddRunnable(1, "BulkInsert-1", new NoSqlAddItem(), new SqlAddItem());
             bms.AddRunnable(10, "BulkInsert-10", new NoSqlAddItem(), new SqlAddItem());
             bms.AddRunnable(100, "BulkInsert-100", new NoSqlAddItem(), new SqlAddItem());
             bms.AddRunnable(1000, "BulkInsert-1000", new NoSqlAddItem(), new SqlAddItem());
