@@ -43,7 +43,7 @@ namespace SNS.Benchmark.Runner
                 RunAddDataInTransaction();
                 Console.WriteLine("Test table Size: {0} M", (i + 1) * 2); // each test are executed twice
 
-                RunReports(i==0);
+                RunReports(i<3);
             }
 
         }
