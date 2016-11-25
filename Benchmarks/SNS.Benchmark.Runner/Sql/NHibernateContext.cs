@@ -72,7 +72,7 @@ namespace SNS.Benchmark.Runner.Sql
         {
             get
             {
-                ApplySchemaChanges();
+               
                 return current ?? (current = CreateNewContext());
             }
         }

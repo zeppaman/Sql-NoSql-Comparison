@@ -13,6 +13,7 @@ namespace SNS.Benchmark.Runner.Sql
 {
     public class SqlAddItem : BenchmarkExecution
     {
+        private const int bulkSize = 100000;
         public override void Execute(object input)
         {
             List<Category> itemsToAdd = new List<Category>();
@@ -37,7 +38,7 @@ namespace SNS.Benchmark.Runner.Sql
                 for (int i = 0; i < itemsToAdd.Count; i++)
                 {
                     s.Insert(itemsToAdd[i]);
-                    if (i % 100000 == 0)
+                    if (i % bulkSize == 0)
                     {
 
                         v.Commit();

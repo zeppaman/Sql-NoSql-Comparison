@@ -18,11 +18,17 @@ namespace SNS.Benchmark.Runner
 {
     class Program
     {
+        /// <summary>
+        /// Run benchmarks
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             InitTest();
 
+            //Number of iteration on Insert Bulk + Run benchmark
             int searchRepeatCount = 2;
+            //Number of test on report
             int reportRepeatCount = 2;
 
 

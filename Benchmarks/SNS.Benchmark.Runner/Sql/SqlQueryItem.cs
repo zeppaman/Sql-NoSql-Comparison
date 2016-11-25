@@ -22,7 +22,7 @@ namespace SNS.Benchmark.Runner.Sql
             Guid IdUnableToFind = Guid.NewGuid();
 
             
-                var fistItem = s.Query<Category>().Take(1).FirstOrDefault();
+           var fistItem = s.Query<Category>().Take(1).FirstOrDefault();
             
 
             for (int i = 0; i < queryRatio[0]; i++)
