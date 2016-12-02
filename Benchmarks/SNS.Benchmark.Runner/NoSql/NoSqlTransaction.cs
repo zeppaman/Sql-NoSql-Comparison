@@ -10,11 +10,19 @@ using SNS.Benchmark.Runner.Sql.Entities;
 
 namespace SNS.Benchmark.Runner.NoSql
 {
+    /// <summary>
+    /// this test simulate a transaction (so just a sequential insert of rows, because MongoDB do not support ACID transactions)
+    /// </summary>
     public class NoSqlTransaction : BenchmarkExecution
     {
         private static IMongoCollection<Category>  list =MongoContext.Current.DataBase.GetCollection<Category>("Category");
         private static IMongoCollection<Detail> detailsList = MongoContext.Current.DataBase.GetCollection<Detail>("Detail");
         private static IMongoCollection<Master> masterList = MongoContext.Current.DataBase.GetCollection<Master>("Master");
+
+        /// <summary>
+        /// Execute the test
+        /// </summary>
+        /// <param name="input">number of row to insert</param>
         public override void Execute(object input)
         {
             int transactions = (int)input;

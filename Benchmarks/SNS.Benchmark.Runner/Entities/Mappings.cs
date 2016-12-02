@@ -7,6 +7,9 @@ using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 using SNS.Benchmark.Runner.Sql.Entities;
 
+/// <summary>
+/// This namespace contains all nhibernate class mappings
+/// </summary>
 namespace SNS.Benchmark.Runner.Entities
 {
     public class CategoryMap : ClassMapping<Category>

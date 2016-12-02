@@ -7,12 +7,21 @@ using SNS.Benchmark.Runner.Sql.Entities;
 
 namespace SNS.Benchmark.Runner.Entities
 {
+    /// <summary>
+    /// this class generates items to store in db
+    /// </summary>
     public  static class DataGenerator
     {
         private static Random random = new Random((int)DateTime.Now.Ticks);//thanks to McAden
 
+
         public static List<Category> BenchmarkCategories { get; internal set; }
 
+        /// <summary>
+        /// return a random string of a given size
+        /// </summary>
+        /// <param name="size">size of the string to return</param>
+        /// <returns></returns>
         private static string NextString(int size)
         {
             StringBuilder builder = new StringBuilder();
@@ -26,6 +35,10 @@ namespace SNS.Benchmark.Runner.Entities
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Give a random category
+        /// </summary>
+        /// <returns></returns>
         public static  Category NextCategory()
         {
             Category c = new Category();
@@ -34,6 +47,12 @@ namespace SNS.Benchmark.Runner.Entities
             return c;
         }
 
+        /// <summary>
+        /// Return a list of details entity, child of a given masterid
+        /// </summary>
+        /// <param name="masterId"> the master id</param>
+        /// <param name="v"> number of items to return</param>
+        /// <returns></returns>
         public  static List<Detail> Details(Guid masterId, int v)
         {
             List<Detail> result = new List<Detail>();
@@ -44,6 +63,11 @@ namespace SNS.Benchmark.Runner.Entities
             return result;
         }
 
+        /// <summary>
+        /// return a  random detail item 
+        /// </summary>
+        /// <param name="masterId"></param>
+        /// <returns></returns>
         public static Detail NextDetail(Guid masterId)
         {
             Detail d = new Detail();
@@ -59,6 +83,11 @@ namespace SNS.Benchmark.Runner.Entities
 
         }
 
+
+        /// <summary>
+        /// Return a master entity to return
+        /// </summary>
+        /// <returns></returns>
         public static Master NextMaster()
         {
             Master d = new Master();
@@ -74,6 +103,10 @@ namespace SNS.Benchmark.Runner.Entities
             return d;
         }
 
+        /// <summary>
+        /// Returns a random category
+        /// </summary>
+        /// <returns></returns>
         private static Category GetRandomCategory()
         {
             int i = random.Next(0, BenchmarkCategories.Count);

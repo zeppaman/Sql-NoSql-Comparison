@@ -12,8 +12,19 @@ using SNS.Benchmark.Runner.Sql.Entities;
 
 namespace SNS.Benchmark.Runner.Sql
 {
+    /// <summary>
+    /// Make query benchmark
+    /// </summary>
     public class SqlQueryItem : BenchmarkExecution
     {
+        /// <summary>
+        /// Execute the test
+        /// </summary>
+        /// <param name="input">input is a integer array with number of test execution for each type
+        /// type 1: query by id found
+        /// type 2: query by id NOT found
+        /// type 3: query paged with filters and sort
+        /// </param>
         public override void Execute(object input)
         {
             int[] queryRatio = (int[])input;

@@ -9,12 +9,20 @@ using SNS.Benchmark.Runner.Sql.Entities;
 
 namespace SNS.Benchmark.Runner.NoSql
 {
+
+    /// <summary>
+    /// Analytics test
+    /// </summary>
     public class NoSqlAnalytics : BenchmarkExecution
     {
         private static IMongoCollection<Category> categories = MongoContext.Current.DataBase.GetCollection<Category>("Category");
         private static IMongoCollection<Master> master = MongoContext.Current.DataBase.GetCollection<Master>("Master");
         private static IMongoCollection<Detail> detail = MongoContext.Current.DataBase.GetCollection<Detail>("Detail");
 
+        /// <summary>
+        /// Execute an analytics test, by the given name
+        /// </summary>
+        /// <param name="input">report,kp,export</param>
         public override void Execute(object input)
         {
             string queryName = input.ToString();
@@ -27,6 +35,9 @@ namespace SNS.Benchmark.Runner.NoSql
             }
         }
 
+        /// <summary>
+        /// Export all data. Fetc is optimized to simulate an "INNER" join
+        /// </summary>
         private void ComputeExport()
         {
             List<object> result = new List<object>();
@@ -53,12 +64,18 @@ namespace SNS.Benchmark.Runner.NoSql
             }
         }
 
+        /// <summary>
+        /// Compute a sum on a table
+        /// </summary>
         private void ComputeKPI()
         {
             var computeSum = detail
                 .AsQueryable<Detail>().Sum(x => x.FieldToSum);
         }
 
+        /// <summary>
+        /// Compute a report
+        /// </summary>
         private void ComputeReport()
         {
             Dictionary<string, object> result = new Dictionary<string, object>();

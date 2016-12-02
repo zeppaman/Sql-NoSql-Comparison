@@ -10,9 +10,16 @@ using SNS.Benchmark.Runner.Sql.Entities;
 
 namespace SNS.Benchmark.Runner.NoSql
 {
+    /// <summary>
+    /// test that add items
+    /// </summary>
     public class NoSqlAddItem : BenchmarkExecution
     {
         private static IMongoCollection<Category>  list =MongoContext.Current.DataBase.GetCollection<Category>("Category");
+        /// <summary>
+        /// Execute the test
+        /// </summary>
+        /// <param name="input">if input is a list of object they are inserte with InsertMany statement, if it is a number they are generated</param>
         public override void Execute(object input)
         {
             List<Category> itemsToAdd = new List<Category>();

@@ -16,16 +16,23 @@ using System.Threading.Tasks;
 using MongoDB;
 using MongoDB.Bson;
 
+
+
 namespace SNS.Benchmark.Runner.NoSql
 {
+
+    /// <summary>
+    /// This class wrap MongoDB driver to absract data access,
+    /// </summary>
     internal class MongoContext
     {
         private MongoClient mongoClient;
+        private IMongoDatabase database;
         public IMongoDatabase DataBase
         {
             get
             {
-                return this.mongoClient.GetDatabase(Settings.Default.MongoDBName);
+                return database;
             }
         }
         //Credenziali
@@ -34,9 +41,15 @@ namespace SNS.Benchmark.Runner.NoSql
         {
 
             MongoContext ctx = new MongoContext();
-            ctx.mongoClient = new MongoClient(Settings.Default.MongoConnectionString);
-      
+            ctx.Init();
+
             return ctx;
+        }
+
+        private void Init()
+        {
+            this.mongoClient = new MongoClient(Settings.Default.MongoConnectionString);
+            this.database = this.mongoClient.GetDatabase(Settings.Default.MongoDBName);
         }
 
         private static MongoContext current;
@@ -48,6 +61,10 @@ namespace SNS.Benchmark.Runner.NoSql
             }
         }
 
+        /// <summary>
+        /// Create a collection if it do not exists
+        /// </summary>
+        /// <param name="CollectionName">name of the collection to create</param>
         public void CreateCollectionIfNotExists(string CollectionName)
         {
             var lists = MongoContext.Current.DataBase.ListCollections().ToList();

@@ -12,17 +12,22 @@ using SNS.Benchmark.Runner.Sql.Entities;
 
 namespace SNS.Benchmark.Runner.Sql
 {
+    /// <summary>
+    /// this test save data in tranction
+    /// </summary>
     public class SqlTransaction : BenchmarkExecution
     {
+        /// <summary>
+        /// Execute the test
+        /// </summary>
+        /// <param name="input">number of transaction to execute</param>
         public override void Execute(object input)
         {
             int transactions = (int)input;
 
             using (IStatelessSession s = NHibernateContext.Current.SessionFactory.OpenStatelessSession())
             {
-                Guid IdUnableToFind = Guid.NewGuid();
-
-
+                
 
                 for (int i = 0; i < transactions; i++)
                 {

@@ -7,6 +7,9 @@ using BenchmarkFramework;
 using NHibernate.Linq;
 namespace SNS.Benchmark.Runner.Sql
 {
+    /// <summary>
+    /// Perform anlytics query (export, report, kpi)
+    /// </summary>
     public class SqlAnalytics : BenchmarkExecution
     {
         private static Dictionary<string, string> sqlToExecute = new Dictionary<string, string>();
@@ -29,6 +32,11 @@ namespace SNS.Benchmark.Runner.Sql
 
         }
 
+
+        /// <summary>
+        /// execute query by name
+        /// </summary>
+        /// <param name="input"></param>
         public override void Execute(object input)
         {
             string queryName = input.ToString();

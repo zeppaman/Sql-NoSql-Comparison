@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson.Serialization.Attributes;
 
+/// <summary>
+/// This namespace contains all entities
+/// </summary>
 namespace SNS.Benchmark.Runner.Sql.Entities
 {
     public class Category
